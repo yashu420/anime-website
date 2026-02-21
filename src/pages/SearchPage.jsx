@@ -1,0 +1,121 @@
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Lottie from "lottie-react";
+import Error from "../assets/Error.json";
+import ShinyText from "../reactBits/ShinyText";
+import { FaPlayCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
+const SearchPage = () => {
+  const { query } = useParams();
+  const [anime, setAnime] = useState([]);
+const navigate = useNavigate();
+  const fetchAnime = async () => {
+    try {
+      const res = await fetch(
+        `https://api.jikan.moe/v4/anime?q=${query}&limit=12&sfw=true`,
+      );
+      const data = await res.json();
+      setAnime(data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnime();
+  }, [query]);
+
+  return (
+    <div className="min-h-screen bg-black text-white pt-20 pb-6 px-10">
+      <h1 className="text-3xl font-bold mb-8">
+        Search Results for :{" "}
+        <span className="text-red-600">{query.toUpperCase()}</span>
+      </h1>
+
+      {anime.length === 0 ? (
+        <div className="text-md pl-3">
+          <div>
+            <Lottie
+              animationData={Error}
+              loop={true}
+              autoplay={true}
+              className="absolute inset-0 w-full h-140 mt-28"
+            />
+          </div>
+
+          <div className="flex mt-130 justify-center">
+            <ShinyText
+              text="No results Found !! Try Searching Something else..."
+              speed={3}
+              delay={0}
+              color="#ffffff"
+              shineColor="#ff0000"
+              spread={150}
+              direction="left"
+              yoyo={false}
+              pauseOnHover={false}
+              disabled={false}
+              className="text-xl font-semibold"
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {anime.map((item) => (
+            <div
+              key={item.mal_id}
+              className="bg-gray-900 hover:shadow-[0_0_15px_rgba(255,0,0,0.5)] rounded-lg overflow-hidden hover:scale-105 transition"
+            >
+              <img
+                src={item.images.jpg.image_url}
+                alt={item.title}
+                className="w-full h-64 object-cover"
+              />
+
+              <div className="p-3 mb">
+                <h2 className="font-bold text-md truncate pb-2">
+                  {item.title}
+                </h2>
+
+                <div className="flex gap-3 flex-wrap">
+                  <p className="text-gray-400 text-xs">
+                    <span className="text-amber-50">Rating:</span> ⭐{" "}
+                    {item.score || "N/A"}
+                  </p>
+
+                  <p className="text-gray-400 text-xs">
+                    <span className="text-amber-50">Duration:</span>{" "}
+                    {item.duration || "N/A"}
+                  </p>
+
+                  <p className="text-gray-400 text-xs">
+                    <span className="text-amber-50">Type:</span>{" "}
+                    {item.type || "N/A"}
+                  </p>
+
+                  <div className="w-full flex justify-center  ">
+                 <button
+  onClick={() => navigate(`/anime/${item.mal_id}`)}
+  className="flex items-center gap-2 bg-red-600 
+  px-6 py-2 rounded-2xl text-sm font-medium
+  transition 
+  hover:bg-red-700
+  hover:shadow-[0_0_15px_rgba(255,0,0,0.7)]
+  hover:scale-105 cursor-pointer"
+>
+  Watch Now
+  <FaPlayCircle className="text-sm" />
+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SearchPage;

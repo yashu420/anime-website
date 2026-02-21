@@ -1,0 +1,225 @@
+[
+  {
+    "mal_id": 1,
+    "title": "Fullmetal Alchemist: Brotherhood",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/1223/96541.jpg" } },
+    "score": 9.2,
+    "type": "TV",
+    "episodes": 64,
+    "year": 2009,
+    "genres": ["Action", "Adventure", "Drama"]
+  },
+  {
+    "mal_id": 2,
+    "title": "Steins;Gate",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/5/73199.jpg" } },
+    "score": 9.1,
+    "type": "TV",
+    "episodes": 24,
+    "year": 2011,
+    "genres": ["Sci-Fi", "Thriller"]
+  },
+  {
+    "mal_id": 3,
+    "title": "Hunter x Hunter (2011)",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/1337/99013.jpg" } },
+    "score": 9.0,
+    "type": "TV",
+    "episodes": 148,
+    "year": 2011,
+    "genres": ["Action", "Adventure"]
+  },
+  {
+    "mal_id": 4,
+    "title": "Attack on Titan",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/10/47347.jpg" } },
+    "score": 8.9,
+    "type": "TV",
+    "episodes": 75,
+    "year": 2013,
+    "genres": ["Action", "Drama", "Fantasy"]
+  },
+  {
+    "mal_id": 5,
+    "title": "Gintama°",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/3/72078.jpg" } },
+    "score": 9.0,
+    "type": "TV",
+    "episodes": 51,
+    
+    "year": 2015,
+    "genres": ["Action", "Comedy"]
+  },
+  {
+    "mal_id": 6,
+    "title": "Your Name.",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/5/87048.jpg" } },
+    "score": 8.9,
+    "type": "Movie",
+    "episodes": 1,
+    "year": 2016,
+    "genres": ["Romance", "Supernatural"]
+  },
+  {
+    "mal_id": 7,
+    "title": "Death Note",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/9/9453.jpg" } },
+    "score": 8.6,
+    "type": "TV",
+    "episodes": 37,
+    "year": 2006,
+    "genres": ["Mystery", "Supernatural"]
+  },
+  {
+    "mal_id": 8,
+    "title": "Spirited Away",
+    "images": { "jpg": { "image_url": "https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2YwOGUzYjRiXkEyXkFqcGc@._V1_.jpg" } },
+    "score": 8.6,
+    "type": "Movie",
+    "episodes": 1,
+    "year": 2001,
+    "genres": ["Adventure", "Fantasy"]
+  },
+  {
+    "mal_id": 9,
+    "title": "Demon Slayer: Kimetsu no Yaiba",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/1286/99889.jpg" } },
+    "score": 8.7,
+    "type": "TV",
+    "episodes": 44,
+    "year": 2019,
+    "genres": ["Action", "Supernatural"]
+  },
+  {
+    "mal_id": 10,
+    "title": "One Punch Man",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/12/76049.jpg" } },
+    "score": 8.6,
+    "type": "TV",
+    "episodes": 24,
+    "year": 2015,
+    "genres": ["Action", "Comedy"]
+  },
+  {
+    "mal_id": 11,
+    "title": "Naruto",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/13/17405.jpg" } },
+    "score": 7.9,
+    "type": "TV",
+    "episodes": 220,
+    "year": 2002,
+    "genres": ["Action", "Adventure"]
+  },
+  {
+    "mal_id": 12,
+    "title": "Naruto: Shippuden",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/5/17407.jpg" } },
+    "score": 8.2,
+    "type": "TV",
+    "episodes": 500,
+    "year": 2007,
+    "genres": ["Action", "Adventure"]
+  },
+  {
+    "mal_id": 13,
+    "title": "Cowboy Bebop",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/4/19644.jpg" } },
+    "score": 8.8,
+    "type": "TV",
+    "episodes": 26,
+    "year": 1998,
+    "genres": ["Action", "Sci-Fi"]
+  },
+  {
+    "mal_id": 14,
+    "title": "Tokyo Ghoul",
+    "images": { "jpg": { "image_url": "https://images.justwatch.com/poster/102012613/s718/tokyo-ghoul.jpg" } },
+    "score": 8.0,
+    "type": "TV",
+    "episodes": 12,
+    "year": 2014,
+    "genres": ["Action", "Horror"]
+  },
+  {
+    "mal_id": 15,
+    "title": "My Hero Academia",
+    "images": { "jpg": { "image_url": "https://cdn.myanimelist.net/images/anime/10/78745.jpg" } },
+    "score": 8.0,
+    "type": "TV",
+    "episodes": 88,
+    "year": 2016,
+    "genres": ["Action", "Comedy"]
+    
+  },  
+ 
+  {
+    "mal_id": 16,
+    "title": "Jujutsu Kaisen",
+    "images": {
+      "jpg": {
+        "image_url": "https://cdn.myanimelist.net/images/anime/1171/109222.jpg"
+      }
+    },
+    "score": 8.6,
+    "type": "TV",
+    "episodes": 24,
+    "year": 2020,
+    "genres": ["Action", "Supernatural"]
+  },
+  {
+    "mal_id": 17,
+    "title": "Chainsaw Man",
+    "images": {
+      "jpg": {
+        "image_url": "https://cdn.myanimelist.net/images/anime/1806/126216.jpg"
+      }
+    },
+    "score": 8.5,
+    "type": "TV",
+    "episodes": 12,
+    "year": 2022,
+    "genres": ["Action", "Fantasy"]
+  },
+  {
+    "mal_id": 18,
+    "title": "Vinland Saga",
+    "images": {
+      "jpg": {
+        "image_url": "https://cdn.myanimelist.net/images/anime/1500/103005.jpg"
+      }
+    },
+    "score": 8.8,
+    "type": "TV",
+    "episodes": 24,
+    "year": 2019,
+    "genres": ["Action", "Drama"]
+  },
+  {
+    "mal_id": 19,
+    "title": "Bleach",
+    "images": {
+      "jpg": {
+        "image_url": "https://cdn.myanimelist.net/images/anime/3/40451.jpg"
+      }
+    },
+    "score": 7.9,
+    "type": "TV",
+    "episodes": 366,
+    "year": 2004,
+    "genres": ["Action", "Supernatural"]
+  },
+  {
+    "mal_id": 20,
+    "title": "Black Clover",
+    "images": {
+      "jpg": {
+        "image_url": "https://cdn.myanimelist.net/images/anime/2/88336.jpg"
+      }
+    },
+    "score": 8.1,
+    "type": "TV",
+    "episodes": 170,
+    "year": 2017,
+    "genres": ["Action", "Fantasy"]
+  }
+]
