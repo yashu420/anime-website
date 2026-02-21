@@ -83,14 +83,15 @@ const Index = () => {
               </button>
 
               <div className=" justify-center flex">
+                <div className="div"></div>
                 <button
                   className="text-white bg-red-600 hover:bg-red-700 
   transition duration-300 cursor-pointer 
   rounded-2xl py-2 px-7 flex items-center
   hover:shadow-[0_0_20px_rgba(255,0,0,0.8)]"
                 >
-                  Explore Now{" "}
-                </button>
+                   Explore Now{" "}
+                </button> 
               </div>
             </div>
           </div>
