@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-
+import toast from "react-hot-toast";
 const Navbar = () => {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
@@ -10,17 +10,24 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "Popular", path: "/popular" },
     { name: "Top Rated", path: "/top" },
-    { name: "About", path: "/about" },
-     { name: "Contact Us", path: "/contact" },
+     { name: "Ongoing", path: "/Ongoing" },
+    { name: "Genres", path: "/Genres" },
+    
   ];
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    if (input.trim() !== "") {
-      navigate(`/search/${input}`);
-      setInput("");
-    }
-  };
+  e.preventDefault();
+
+  const trimmedInput = input.trim();
+ if (!trimmedInput) {
+    toast.error("Please type something to search ");
+    return;
+  }
+
+
+  navigate(`/search/${trimmedInput}`);
+  setInput("");
+};
 
   return (
     <nav className="fixed top-0 w-full bg-black/70 backdrop-blur-md z-50">

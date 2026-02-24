@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaInstagram,} from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
+
 
 const Footer = () => {
   return (
@@ -25,19 +27,19 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link to="/popular" className="hover:text-red-500 transition">
-                Popular
-              </Link>
-            </li>
-            <li>
-              <Link to="/top" className="hover:text-red-500 transition">
-                Top Rated
-              </Link>
-            </li>
-            <li>
               <Link to="/contact" className="hover:text-red-500 transition">
                 Contact Us
               </Link>
+            </li>
+            <li>
+              <Link to="/privacypolicy" className="hover:text-red-600">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+             <Link to="/terms" className="hover:text-red-600 transition">
+  Terms 
+</Link>
             </li>
           </ul>
         </div>
@@ -52,8 +54,9 @@ const Footer = () => {
               <FaInstagram />
             </a>
             <a href="#" className="hover:text-red-500 transition">
-              <FaTwitter />
-            </a>
+             <FaSquareXTwitter />
+
+             </a>
           </div>
         </div>
       </div>

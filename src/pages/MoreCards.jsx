@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import animeData from "../assets/Cards.json";
+import SliderButton from "./UI/Buttons";
 
 const MoreCards = () => {
   const cardsPerView = 6;
@@ -27,23 +27,29 @@ const MoreCards = () => {
   const visibleCards = shuffledData.slice(index, index + cardsPerView);
 
   return (
-    <div className=" relative">
-      <h1 className="text-3xl font-bold mb-8 mt-8">Top Picks For You </h1>
+    <div className="relative">
+      <h1 className="text-3xl font-bold mb-8 mt-8">
+        Top Picks For You
+      </h1>
+
       <div className="relative px-10">
+
+
         {index > 0 && (
-          <button
+          <SliderButton
+            direction="left"
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 p-3 rounded-full hover:bg-red-600 transition"
-          >
-            <ChevronLeft className="text-white" size={28} />
-          </button>
+            className="left-0"
+          />
         )}
 
-        <div className="grid grid-cols-6 gap-6  ">
+        <div className="grid grid-cols-6 gap-6">
           {visibleCards.map((item) => (
             <div
               key={item.mal_id}
-              className="rounded-xl overflow-hidden bg-gray-900 group cursor-pointer hover:scale-105 transition duration-300"
+              className="rounded-xl overflow-hidden bg-gray-900 
+              group cursor-pointer hover:scale-105 
+              transition duration-300"
             >
               <div className="h-[220px] overflow-hidden">
                 <img
@@ -71,13 +77,13 @@ const MoreCards = () => {
         </div>
 
         {index < shuffledData.length - cardsPerView && (
-          <button
+          <SliderButton
+            direction="right"
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 p-3 rounded-full hover:bg-red-600 transition"
-          >
-            <ChevronRight className="text-white" size={28} />
-          </button>
+            className="right-0"
+          />
         )}
+
       </div>
     </div>
   );
