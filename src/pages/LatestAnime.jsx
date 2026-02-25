@@ -35,7 +35,7 @@ const LatestAnime = () => {
   return (
     <div className="mt-8 relative">
      
-      <div className="flex justify-between items-center mb-8 px-10">
+      <div className="flex justify-between items-center mb-8 px-10 pl-0">
         <h1 className="text-white text-3xl font-bold">
           Latest Released Anime
         </h1>
