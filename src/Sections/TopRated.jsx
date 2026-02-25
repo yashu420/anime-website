@@ -37,8 +37,10 @@ const TopRated = () => {
           }
         `;
 
-        const response = await axios.post("/anilist", { query });
-
+const response = await axios.post(
+  "https://graphql.anilist.co",
+  { query }
+);
         const formattedAnimeList =
           response.data.data.Page.media
             .filter((animeItem) => animeItem.idMal)
