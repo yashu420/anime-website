@@ -41,7 +41,7 @@ const Footer = () => {
             </li>
             <li>
               <Link to="/terms" className="hover:text-red-600 transition">
-                Terms
+                Terms of use  
               </Link>
             </li>
           </ul>

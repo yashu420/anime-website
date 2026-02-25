@@ -131,7 +131,7 @@ const TopRated = () => {
                 onClick={() => navigate(`/anime/${anime.malId}`)}
                 className="bg-red-600 px-6 py-3 rounded-xl 
           hover:bg-red-700 hover:shadow-[0_0_20px_rgba(255,0,0,0.7)] 
-          transition w-fit"
+          transition w-fit cursor-pointer"
               >
                 Watch Now
               </button>

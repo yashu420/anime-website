@@ -30,7 +30,7 @@ const PopularChar = () => {
   const visibleCards = characters.slice(index, index + cardsPerView);
 
   return (
-    <div className="px-10 mt-10 relative">
+    <div className="px-10  relative">
   
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-white text-3xl font-bold">Popular Characters</h1>

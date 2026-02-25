@@ -65,7 +65,7 @@ const TopRatedSection = ({ animeList }) => {
                 />
               </div>
 
-              <div className="p-2">
+              <div className="p-2   ">
                 <h3 className="text-xs font-semibold line-clamp-1">
                   {animeItem.title}
                 </h3>

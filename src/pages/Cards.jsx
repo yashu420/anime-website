@@ -1,10 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import animeData from "../assets/Cards.json";
 
 const Cards = () => {
-  const cardsPerView = 6;
   const [index, setIndex] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(6);
+
+  // 🔥 Responsive cards count
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setCardsPerView(2);
+      } else if (window.innerWidth < 768) {
+        setCardsPerView(3);
+      } else if (window.innerWidth < 1024) {
+        setCardsPerView(4);
+      } else if (window.innerWidth < 1280) {
+        setCardsPerView(5);
+      } else {
+        setCardsPerView(6);
+      }
+
+      setIndex(0); // reset on resize
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const nextSlide = () => {
     if (index < animeData.length - cardsPerView) {
@@ -21,10 +44,13 @@ const Cards = () => {
   const visibleCards = animeData.slice(index, index + cardsPerView);
 
   return (
-    <div className="px-8 relative">
-      <div className="flex justify-between items-center mb-6 ">
-        <h1 className="text-white text-3xl font-bold pt-6">Trending Anime</h1>
-        <button className="text-white hover:text-red-500 transition">
+    <div className="px-4 md:px-8 relative bottom-30 md:bottom-50">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-white text-xl md:text-3xl font-bold pt-6">
+          Trending Anime
+        </h1>
+        <button className="text-white text-sm md:text-base hover:text-red-500 transition">
           See All →
         </button>
       </div>
@@ -33,18 +59,30 @@ const Cards = () => {
         {index > 0 && (
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 p-3 rounded-full hover:bg-red-600 transition"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 p-2 md:p-3 rounded-full hover:bg-red-600 transition"
           >
-            <ChevronLeft className="text-white" size={28} />
+            <ChevronLeft className="text-white" size={24} />
           </button>
         )}
-        <div className="grid grid-cols-6 gap-6">
+
+        {/* Responsive Grid */}
+        <div
+          className="
+            grid 
+            grid-cols-2 
+            sm:grid-cols-3 
+            md:grid-cols-4 
+            lg:grid-cols-5 
+            xl:grid-cols-6 
+            gap-4 md:gap-6
+          "
+        >
           {visibleCards.map((item) => (
             <div
               key={item.mal_id}
-              className="rounded-xl overflow-hidden bg-black group cursor-pointer hover:scale-105 transition duration-300"
+              className="rounded-xl overflow-hidden bg-black/20 group cursor-pointer hover:scale-105 transition duration-300"
             >
-              <div className="h-[220px] overflow-hidden">
+              <div className="h-[180px] sm:h-[200px] md:h-[220px] overflow-hidden">
                 <img
                   src={item.images.jpg.image_url}
                   alt={item.title}
@@ -53,7 +91,7 @@ const Cards = () => {
               </div>
 
               <div className="p-3">
-                <h3 className="text-white font-semibold text-sm mb-1 line-clamp-1">
+                <h3 className="text-gray-100 font-semibold text-sm mb-1 line-clamp-1">
                   {item.title}
                 </h3>
 
@@ -61,7 +99,7 @@ const Cards = () => {
                   ⭐ {item.score} • {item.type}
                 </p>
 
-                <p className="text-gray-500 text-xs line-clamp-1">
+                <p className="text-gray-400 text-xs line-clamp-1">
                   {item.genres.join(", ")}
                 </p>
               </div>
@@ -72,9 +110,9 @@ const Cards = () => {
         {index < animeData.length - cardsPerView && (
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 p-3 rounded-full hover:bg-red-600 transition"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/60 p-2 md:p-3 rounded-full hover:bg-red-600 transition"
           >
-            <ChevronRight className="text-white" size={28} />
+            <ChevronRight className="text-white" size={24} />
           </button>
         )}
       </div>

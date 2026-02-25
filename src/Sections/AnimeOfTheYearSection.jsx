@@ -105,9 +105,7 @@ const AnimeOfTheYearSection = () => {
               flex-shrink-0 mt-5 mb-5"
               style={{ width: "calc(100% / 7 - 12px)" }}
             >
-              <div className="absolute top-2 left-2 bg-red-600 text-white text-xs px-3 py-1 rounded-full z-10">
-                #{i + 1}
-              </div>
+             
 
               <div className="aspect-[2/3] overflow-hidden">
                 <img

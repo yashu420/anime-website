@@ -42,10 +42,9 @@ const TopPicksForYouSection = () => {
           }
         `;
 
-        const response = await axios.post(
-          "https://graphql.anilist.co",
-          { query }
-        );
+        const response = await axios.post("https://graphql.anilist.co", {
+          query,
+        });
 
         const formatted = response.data.data.Page.media
           .filter((item) => item.idMal)
@@ -83,11 +82,7 @@ const TopPicksForYouSection = () => {
   };
 
   if (!animeList.length) {
-    return (
-      <div className="px-10 py-14 text-white">
-        Loading Top Picks...
-      </div>
-    );
+    return <div className="px-10 py-14 text-white">Loading Top Picks...</div>;
   }
 
   return (
@@ -97,10 +92,7 @@ const TopPicksForYouSection = () => {
       </h2>
 
       <div className="relative overflow-hidden">
-
-        {index > 0 && (
-          <SliderButton direction="left" onClick={prevSlide} />
-        )}
+        {index > 0 && <SliderButton direction="left" onClick={prevSlide} />}
 
         {index < maxIndex && (
           <SliderButton direction="right" onClick={nextSlide} />
@@ -122,10 +114,6 @@ const TopPicksForYouSection = () => {
               flex-shrink-0 mt-5 mb-5"
               style={{ width: "calc(100% / 7 - 12px)" }}
             >
-              <div className="absolute top-2 left-2 bg-red-600 text-white text-xs px-3 py-1 rounded-full z-10">
-                #{i + 1}
-              </div>
-
               <div className="aspect-[2/3] overflow-hidden">
                 <img
                   src={animeItem.coverImage}
@@ -139,14 +127,13 @@ const TopPicksForYouSection = () => {
                   {animeItem.title}
                 </h3>
                 <p className="text-[10px] text-gray-400 mt-1">
-                  ⭐ {animeItem.score || "N/A"} •{" "}
-                  {animeItem.episodes || "?"} eps
+                  ⭐ {animeItem.score || "N/A"} • {animeItem.episodes || "?"}{" "}
+                  eps
                 </p>
               </div>
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );
