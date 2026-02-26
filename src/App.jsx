@@ -3,7 +3,7 @@ import AppLayout from "./AppLayout";
 import Index from "./pages/index";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
-import Popular from "./Sections/Popular";
+import Popular from "./pages/PopularSection/Popular";
 import About from "./Sections/About";
 import TopRated from "./Sections/TopRated";
 import Contact from "./pages/Contact";
@@ -14,7 +14,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import { Toaster } from "react-hot-toast";
 import Terms from "./pages/Terms";
 import ScrollToTop from "./pages/UI/ScrollToTop";
-import Genres from "./pages/Genres";
+import Genres from "./pages/GenresSection/Genres";
 import News from "./pages/News";
 function App() {
   return (

@@ -67,7 +67,7 @@ const Cards = () => {
 
         {/* Responsive Grid */}
         <div
-          className="
+          className=" 
             grid 
             grid-cols-2 
             sm:grid-cols-3 
@@ -80,7 +80,7 @@ const Cards = () => {
           {visibleCards.map((item) => (
             <div
               key={item.mal_id}
-              className="rounded-xl overflow-hidden bg-black/20 group cursor-pointer hover:scale-105 transition duration-300"
+              className="rounded-xl overflow-hidden bg-black/20 group cursor-pointer hover:scale-105 transition duration-300 hover:shadow-[0_0_10px_rgba(255,0,0,0.8)]"
             >
               <div className="h-[180px] sm:h-[200px] md:h-[220px] overflow-hidden">
                 <img

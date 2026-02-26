@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_KEY = "f036373eab4f21f43c7052659cd41a0e";
+const API_KEY = "aee0be136a7a2c0a2ba08c6fe5bcd1d0";
 
 const AnimeNewsGrid = () => {
   const [news, setNews] = useState([]);
@@ -10,12 +10,12 @@ const AnimeNewsGrid = () => {
     const fisherYatesShuffle = (array) => {
       const shuffled = [...array];
 
-      for (let index = shuffled.length - 1; index > 0; index--) {
-        const randomIndex = Math.floor(Math.random() * (index + 1));
-
-        const temp = shuffled[index];
-        shuffled[index] = shuffled[randomIndex];
-        shuffled[randomIndex] = temp;
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[randomIndex]] = [
+          shuffled[randomIndex],
+          shuffled[i],
+        ];
       }
 
       return shuffled;
@@ -24,7 +24,7 @@ const AnimeNewsGrid = () => {
     const fetchAnimeNews = async () => {
       try {
         const response = await axios.get(
-          `https://gnews.io/api/v4/search?q=anime&lang=en&max=50&apikey=${API_KEY}`,
+          `https://gnews.io/api/v4/search?q=anime&lang=en&max=10&apikey=${API_KEY}`,
         );
 
         const formattedNews = response.data.articles.map((article) => ({
@@ -38,17 +38,31 @@ const AnimeNewsGrid = () => {
           url: article.url,
         }));
 
-        // Shuffle entire dataset
-        const shuffledNews = fisherYatesShuffle(formattedNews);
+        const shuffled = fisherYatesShuffle(formattedNews);
 
-        // Take only 7 for your layout
-        setNews(shuffledNews.slice(0, 7));
+        // Save to localStorage
+        localStorage.setItem("animeNews", JSON.stringify(shuffled));
+        localStorage.setItem("animeNewsTime", Date.now());
+
+        setNews(shuffled.slice(0, 7));
       } catch (error) {
         console.error("News Fetch Error:", error);
       }
     };
 
-    fetchAnimeNews();
+    const cachedNews = localStorage.getItem("animeNews");
+    const cachedTime = localStorage.getItem("animeNewsTime");
+
+    const ONE_HOUR = 1000 * 60 * 60;
+
+    if (cachedNews && cachedTime && Date.now() - cachedTime < ONE_HOUR) {
+      // Use cached data
+      const parsed = JSON.parse(cachedNews);
+      setNews(parsed.slice(0, 7));
+    } else {
+      // Fetch new data
+      fetchAnimeNews();
+    }
   }, []);
 
   if (news.length < 7) {

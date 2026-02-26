@@ -41,9 +41,7 @@ const AnimeNewsSection = () => {
 
             // ❌ Remove specific genres
             const blockedGenres = ["Hentai", "Ecchi", "Harem"];
-            return !item.genres.some((genre) =>
-              blockedGenres.includes(genre)
-            );
+            return !item.genres.some((genre) => blockedGenres.includes(genre));
           })
           .slice(0, 8) // only keep first 8 after filtering
           .map((item) => ({
