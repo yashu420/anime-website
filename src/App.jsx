@@ -15,7 +15,7 @@ import { Toaster } from "react-hot-toast";
 import Terms from "./pages/Terms";
 import ScrollToTop from "./pages/UI/ScrollToTop";
 import Genres from "./pages/Genres";
-import OnGoing from "./pages/OnGoing";
+import News from "./pages/News";
 function App() {
   return (
     <>
@@ -46,7 +46,8 @@ function App() {
             <Route path="trailer/:id" element={<TrailerPage />} />
             <Route path="/terms" element={<Terms />} />
                 <Route path="Genres" element={<Genres />} />
-                    <Route path="OnGoing" element={<OnGoing/>} />
+                 <Route path="News" element={<News />} />
+
           </Route>
         </Routes>
       </BrowserRouter>{" "}
