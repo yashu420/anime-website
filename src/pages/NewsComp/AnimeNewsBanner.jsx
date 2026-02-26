@@ -31,7 +31,7 @@ const AnimeNewsBanner = () => {
       try {
         const query = `
           query {
-            Page(page: 1, perPage: 25) {
+            Page(page: 1, perPage: 15) {
               media(sort: TRENDING_DESC, type: ANIME) {
                 id
                 title { english romaji }
