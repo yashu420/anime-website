@@ -116,7 +116,7 @@ const TopRated = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
 
             <div className="relative z-20 h-full flex flex-col justify-center px-16 max-w-2xl space-y-4">
-              <h1 className="text-5xl md:text-6xl font-bold">{anime.title}</h1>
+              <h1 className="text-5xl md:text-6xl font-bold font-['Orbitron']">{anime.title}</h1>
 
               <p className="text-gray-300 line-clamp-5 mt-4">
                 {anime.description}

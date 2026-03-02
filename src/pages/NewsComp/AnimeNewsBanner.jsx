@@ -103,7 +103,7 @@ const AnimeNewsBanner = () => {
 
           {/* 🔥 Content */}
           <div className="relative z-20 h-full flex flex-col justify-center px-16 max-w-3xl space-y-6">
-            <h1 className="text-5xl md:text-6xl font-bold text-white">
+            <h1 className="text-5xl md:text-6xl font-bold text-white font-['Orbitron']">
               {news.title}
             </h1>
 
