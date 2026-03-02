@@ -31,8 +31,7 @@ const AnimeNewsSection = () => {
         }
       `;
 
-      const response = await axios.post("/anilist", { query });
-
+axios.post("https://graphql.anilist.co", { query });
       const filtered =
         response.data.data.Page.media
           .filter((item) => {
