@@ -4,7 +4,7 @@ import AnimeNewsGrid from "./AnimeNewsGrid";
 
 const AnimeNewsSection = () => {
   const [newsData, setNewsData] = useState([]);
-  const hasFetched = useRef(false); // 🔥 Prevent double fetch (429 safe)
+  const hasFetched = useRef(false);
 
   // 🔥 Random minutes (1–59)
   const generateRandomMinutes = () => {
@@ -31,32 +31,48 @@ const AnimeNewsSection = () => {
         }
       `;
 
-axios.post("https://graphql.anilist.co", { query });
-      const filtered =
-        response.data.data.Page.media
-          .filter((item) => {
-            // ❌ Remove adult content
-            if (item.isAdult) return false;
+      // ✅ IMPORTANT — Await and store response
+      const response = await axios.post(
+        "https://graphql.anilist.co",
+        {
+          query: query,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-            // ❌ Remove specific genres
-            const blockedGenres = ["Hentai", "Ecchi", "Harem"];
-            return !item.genres.some((genre) => blockedGenres.includes(genre));
-          })
-          .slice(0, 8) // only keep first 8 after filtering
-          .map((item) => ({
-            id: item.id,
-            title: item.title.english || item.title.romaji,
-            image: item.bannerImage || item.coverImage.extraLarge,
-            time: `${generateRandomMinutes()} min ago`,
-          })) || [];
+      const media = response.data?.data?.Page?.media || [];
+
+      const filtered = media
+        .filter((item) => {
+          if (item.isAdult) return false;
+
+          const blockedGenres = ["Hentai", "Ecchi", "Harem"];
+          return !item.genres?.some((genre) =>
+            blockedGenres.includes(genre)
+          );
+        })
+        .slice(0, 8)
+        .map((item) => ({
+          id: item.id,
+          title: item.title.english || item.title.romaji,
+          image:
+            item.bannerImage ||
+            item.coverImage?.extraLarge ||
+            "",
+          time: `${generateRandomMinutes()} min ago`,
+        }));
 
       setNewsData(filtered);
     } catch (error) {
       if (error.response?.status === 429) {
-        console.log("Rate limited. Retrying...");
+        console.log("Rate limited. Retrying in 3 seconds...");
         setTimeout(fetchNews, 3000);
       } else {
-        console.error("AniList Fetch Error:", error);
+        console.error("AniList News Fetch Error:", error);
       }
     }
   };
