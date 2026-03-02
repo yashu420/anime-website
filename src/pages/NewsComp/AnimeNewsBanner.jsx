@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const AnimeNewsBanner = () => {
-  const navigate = useNavigate();
   const [newsList, setNewsList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // 🔥 Generate random minutes (1–59)
   const generateRandomMinutes = () => {
     return Math.floor(Math.random() * 59) + 1;
   };
 
-  // 🔥 Professional Shuffle (Fisher–Yates)
   const shuffleArray = (array) => {
     const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
@@ -25,7 +21,6 @@ const AnimeNewsBanner = () => {
     return newArray;
   };
 
-  // 🔥 Fetch from AniList
   useEffect(() => {
     const fetchAnimeNews = async () => {
       try {
@@ -43,7 +38,16 @@ const AnimeNewsBanner = () => {
           }
         `;
 
-        const response = await axios.post("/anilist", { query });
+        // ✅ Direct AniList API call
+        const response = await axios.post(
+          "https://graphql.anilist.co",
+          { query },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const formatted =
           response.data.data.Page.media.map((item) => ({
@@ -58,7 +62,6 @@ const AnimeNewsBanner = () => {
             randomMinutes: generateRandomMinutes(),
           })) || [];
 
-        // 🔥 Shuffle banners
         const shuffledNews = shuffleArray(formatted).slice(0, 6);
         setNewsList(shuffledNews);
       } catch (error) {
@@ -69,12 +72,11 @@ const AnimeNewsBanner = () => {
     fetchAnimeNews();
   }, []);
 
-  // 🔥 Auto slider
   useEffect(() => {
     if (!newsList.length) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((previousIndex) => (previousIndex + 1) % newsList.length);
+      setCurrentIndex((prev) => (prev + 1) % newsList.length);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -98,10 +100,8 @@ const AnimeNewsBanner = () => {
           }`}
           style={{ backgroundImage: `url(${news.image})` }}
         >
-          {/* 🔥 Black Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
 
-          {/* 🔥 Content */}
           <div className="relative z-20 h-full flex flex-col justify-center px-16 max-w-3xl space-y-6">
             <h1 className="text-5xl md:text-6xl font-bold text-white font-['Orbitron']">
               {news.title}
