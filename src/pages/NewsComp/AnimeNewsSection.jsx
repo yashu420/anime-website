@@ -41,7 +41,7 @@ const AnimeNewsSection = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       const media = response.data?.data?.Page?.media || [];
@@ -51,18 +51,13 @@ const AnimeNewsSection = () => {
           if (item.isAdult) return false;
 
           const blockedGenres = ["Hentai", "Ecchi", "Harem"];
-          return !item.genres?.some((genre) =>
-            blockedGenres.includes(genre)
-          );
+          return !item.genres?.some((genre) => blockedGenres.includes(genre));
         })
         .slice(0, 8)
         .map((item) => ({
           id: item.id,
           title: item.title.english || item.title.romaji,
-          image:
-            item.bannerImage ||
-            item.coverImage?.extraLarge ||
-            "",
+          image: item.bannerImage || item.coverImage?.extraLarge || "",
           time: `${generateRandomMinutes()} min ago`,
         }));
 

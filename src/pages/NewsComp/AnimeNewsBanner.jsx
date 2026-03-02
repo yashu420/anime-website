@@ -46,7 +46,7 @@ const AnimeNewsBanner = () => {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         );
 
         const formatted =
