@@ -153,3 +153,4 @@ const NewsCard = ({ news }) => {
 };
 
 export default AnimeNewsGrid;
+ 
