@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabase-client";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,7 +9,19 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+ 
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: "http://localhost:5173", // change if needed
+      },
+    });
 
+    if (error) {
+      setError(error.message);
+    }
+  };
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -73,13 +86,34 @@ const handleSubmit = async (e) => {
             Login
           </button>
         </form>
+              <div className="pt-2">
+          <div className="flex items-center">
+            <div className="flex-grow h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
+            <span className="mx-4 text-gray-400">OR</span>
+            <div className="flex-grow h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
+          </div>
+        </div>
 
-        <p className="text-sm text-gray-400 mt-6 text-center">
+
+
+        <div className="pt-2">
+          <button
+              onClick={handleGoogleLogin}
+              className="w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/40 text-white p-3 rounded-xl cursor-pointer transition-all duration-200 group"
+            >
+              <FcGoogle size={22} />
+              <span className="text-sm font-medium tracking-wide">
+                Continue with Google
+              </span>
+            </button>
+        </div>
+        <p className="text-sm text-gray-400 pt-2 text-center">
           Don't have an account?{" "}
           <Link to="/signup" className="text-red-500 hover:underline">
             Sign Up
           </Link>
         </p>
+        
       </div>
     </div>
   );

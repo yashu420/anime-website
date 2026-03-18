@@ -3,8 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabase-client";
 import SuccessPopup from "./SuccessPopup";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
-import { FaApple } from "react-icons/fa";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -56,7 +54,8 @@ const Signup = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-redirectTo: window.location.origin      },
+        redirectTo: "http://localhost:5173", // change if needed
+      },
     });
 
     if (error) {
@@ -135,26 +134,24 @@ redirectTo: window.location.origin      },
         </div>
 
         <div className="pt-3 ">
-          {/* ✅ GOOGLE BUTTON WORKING */}
-          <button onClick={handleGoogleLogin} className="pl-30 cursor-pointer">
-            <FcGoogle size={31} />
-          </button>
-
-          <button className="pl-6 cursor-pointer ">
-            <FaFacebook size={30} />
-          </button>
-
-          <button className="pl-6 cursor-pointer ">
-            <FaApple size={30} />
-          </button>
+          <div className="">
+            <button
+              onClick={handleGoogleLogin}
+              className="w-full flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/40 text-white p-3 rounded-xl cursor-pointer transition-all duration-200 group"
+            >
+              <FcGoogle size={22} />
+              <span className="text-sm font-medium tracking-wide">
+                Continue with Google
+              </span>
+            </button>
+            <p className="text-sm text-gray-400 mt-2 text-center">
+              Already have an account?{" "}
+              <Link to="/login" className="text-red-500">
+                Login
+              </Link>
+            </p>
+          </div>
         </div>
-
-        <p className="text-sm text-gray-400 mt-2 text-center">
-          Already have an account?{" "}
-          <Link to="/login" className="text-red-500">
-            Login
-          </Link>
-        </p>
       </div>
     </div>
   );
