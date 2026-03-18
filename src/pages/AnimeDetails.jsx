@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ShinyText from "../reactBits/ShinyText";
-import MoreCards from "./MoreCards";
 import LatestAnime from "./LatestAnime";
 
 const AnimeDetails = () => {
@@ -137,7 +136,7 @@ const AnimeDetails = () => {
           <p className="text-gray-400">No trailer available.</p>
         )}
       </div>
-      <MoreCards />
+     
       <LatestAnime />
     </div>
   );

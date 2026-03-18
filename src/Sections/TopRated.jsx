@@ -41,9 +41,10 @@ const TopRated = () => {
           }
         `;
 
-        const response = await axios.post("https://graphql.anilist.co", {
-          query,
-        });
+       const response = await axios.post(
+  "https://graphql.anilist.co",
+  { query }
+);
 
         const formatted = response.data.data.Page.media
           .filter((item) => item.idMal)

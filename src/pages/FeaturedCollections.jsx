@@ -44,8 +44,8 @@ const FeaturedCollections = () => {
   ];
 
   return (
-    <div className="w-full px-4 md:px-10 -mt-40">
-      <h2 className="text-white text-2xl md:text-3xl font-bold mb-8">
+    <div className="w-full px-4 md:px-10 mt-8">
+      <h2 className="text-white text-2xl md:text-3xl font-bold mb-8 -ml-10">
         Featured Collections
       </h2>
 

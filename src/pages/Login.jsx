@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { supabase } from "../supabase-client";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,20 +9,33 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!email || !password) {
-      setError("Please fill all fields");
+  if (!email || !password) {
+    setError("Please fill all fields");
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setError(error.message);
       return;
     }
 
-    if (email === "admin@gmail.com" && password === "123456") {
-      navigate("/");
-    } else {
-      setError("Invalid credentials");
-    }
-  };
+    // ✅ success
+    setError("");
+    navigate("/");
+
+  } catch (err) {
+    setError("Something went wrong");
+  }
+};
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
@@ -54,7 +68,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="bg-red-600 hover:bg-red-700 transition p-3 rounded-lg font-semibold hover:shadow-[0_0_20px_rgba(255,0,0,0.8)] cursor-pointer"
+            className="bg-red-600 hover:bg-red-700 transition p-3 rounded-lg font-semibold  cursor-pointer"
           >
             Login
           </button>

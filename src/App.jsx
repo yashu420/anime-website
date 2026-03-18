@@ -47,7 +47,6 @@ function App() {
             <Route path="/terms" element={<Terms />} />
                 <Route path="Genres" element={<Genres />} />
                  <Route path="News" element={<News />} />
-
           </Route>
         </Routes>
       </BrowserRouter>{" "}

@@ -1,6 +1,6 @@
 import React from "react";
 import tanjiro from "../assets/tanjiro.mp4";
-import Cards from "./Cards";
+
 import Reveal from "./Reveal";
 import Lottie from "lottie-react";
 import Light from "../assets/Light.json";
@@ -8,13 +8,14 @@ import Rocket from "../assets/Startup.json";
 import download from "../assets/Download.json";
 import { FaPlayCircle } from "react-icons/fa";
 import FeaturedCollections from "./FeaturedCollections";
-import PopularChar from "./PopularChar"
+
+import AnimeRow from "./AnimeRow";
 
 const Index = () => {
   return (
-    <div className="w-full overflow-hidden h-500 bg-black/90">
+    <div className="w-full overflow-hidden h-600 bg-black/90">
       {/* 🔥 HERO SECTION */}
-      <div className="relative w-full h-220">
+      <div className="relative w-full h-230">
         {/* Background Video */}
         <video
           src={tanjiro}
@@ -79,7 +80,6 @@ const Index = () => {
                 transition duration-300 cursor-pointer 
                 rounded-2xl py-2 px-6 flex items-center
                 hover:shadow-[0_0_20px_rgba(255,0,0,0.8)]"
-                
                 >
                   Watch Now
                   <span className="ml-2 text-xl">
@@ -102,12 +102,27 @@ const Index = () => {
       </div>
 
       {/* 🔥 CONTENT SECTION */}
-      <div className="relative w-full pt-16 h-70">
+      <div className="relative w-full  ">
         <Reveal>
-          <Cards />
-          <FeaturedCollections/>
-          
+          <div className="m-10 -mt-40 ">
+            
+            <AnimeRow
+              title="Trending Anime 🔥"
+              apiUrl="https://api.jikan.moe/v4/top/anime"
+            />
+            <AnimeRow
+              title="Latest Released Anime"
+              apiUrl="https://api.jikan.moe/v4/seasons/now"
+            />
+         
+            <FeaturedCollections />
+            <AnimeRow
+              title="Latest Released Anime"
+              apiUrl="https://api.jikan.moe/v4/top/anime"
+            />
+          </div> 
         </Reveal>
+       
       </div>
     </div>
   );

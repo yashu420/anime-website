@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import successAnimation from "../assets/Success.json";
-import Lottie from "lottie-react";
-import ShinyText from "../reactBits/ShinyText";
+import { supabase } from "../supabase-client";
+import SuccessPopup from "./SuccessPopup";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { FaApple } from "react-icons/fa";
+
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,7 +16,8 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // ✅ EMAIL SIGNUP
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!name || !email || !password || !confirmPassword) {
@@ -26,10 +30,39 @@ const Signup = () => {
       return;
     }
 
-    console.log("Signup Data:", { name, email, password });
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: name },
+        },
+      });
 
-    setError("");
-    setShowPopup(true);
+      if (error) {
+        setError(error.message);
+        return;
+      }
+
+      setError("");
+      setShowPopup(true);
+    } catch (err) {
+      setError("Something went wrong");
+    }
+  };
+
+  // ✅ GOOGLE LOGIN
+  const handleGoogleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: "http://localhost:5173", // change if needed
+      },
+    });
+
+    if (error) {
+      setError(error.message);
+    }
   };
 
   const handleClosePopup = () => {
@@ -38,50 +71,13 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white px-4  ">
-      {showPopup && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center">
-          <Lottie
-            animationData={successAnimation}
-            loop={false}
-            autoplay={true}
-            className="absolute inset-0 w-full h-full "
-          />
+    <div className="min-h-screen flex items-center justify-center bg-black text-white px-4 pt-10">
+      {showPopup && <SuccessPopup onClose={handleClosePopup} />}
 
-          <div className="relative p-[3px] rounded-3xl border-3 backdrop-blur-sm border-red-700 shadow-[0_0_25px_rgba(255,0,0,0.8)]">
-            <div className="  bg-black/40   rounded-3xl px-8 py-10 text-center w-[350px] md:w-[450px] ">
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                🎉 SignUp <span className="text-red-600">Completed</span>
-              </h1>
-
-              <p className=" mb-4  font-bold text-md">
-                <ShinyText
-                  text="Your account has been created successfully."
-                  speed={3}
-                  delay={0}
-                  color="#ffffff"
-                  shineColor="#ff0000 "
-                  spread={150}
-                  direction="left"
-                  yoyo={false}
-                  pauseOnHover={false}
-                  disabled={false}
-                  className="text-md"
-                />
-              </p>
-
-              <button
-                onClick={handleClosePopup}
-                className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-lg transition duration-300 hover:shadow-[0_0_25px_rgba(255,0,0,0.8)] hover:cursor-pointer"
-              >
-                Go to Login
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="w-full max-w-md bg-black/70 backdrop-blur-md p-8 rounded-2xl   border border-red-600/60 shadow-[0_0_30px_rgba(255,0,0,0.5)]">
+      <div
+        className="w-full max-w-md bg-black/70 backdrop-blur-md p-8 rounded-2xl border
+       border-red-600/60 shadow-[0_0_30px_rgba(255,0,0,0.5)] h-135 "
+      >
         <h1 className="text-3xl font-bold mb-6 text-center">
           Create <span className="text-red-600">Account</span>
         </h1>
@@ -96,7 +92,7 @@ const Signup = () => {
             placeholder="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="bg-black border border-gray-600 p-3 rounded-lg outline-none focus:border-red-600 transition"
+            className="bg-black border border-gray-600 p-3 rounded-lg"
           />
 
           <input
@@ -104,7 +100,7 @@ const Signup = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-black border border-gray-600 p-3 rounded-lg outline-none focus:border-red-600 transition"
+            className="bg-black border border-gray-600 p-3 rounded-lg"
           />
 
           <input
@@ -112,7 +108,7 @@ const Signup = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="bg-black border border-gray-600 p-3 rounded-lg outline-none focus:border-red-600 transition"
+            className="bg-black border border-gray-600 p-3 rounded-lg"
           />
 
           <input
@@ -120,20 +116,43 @@ const Signup = () => {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="bg-black border border-gray-600 p-3 rounded-lg outline-none focus:border-red-700  transition"
+            className="bg-black border border-gray-600 p-3 rounded-lg"
           />
 
           <button
             type="submit"
-            className="bg-red-600 hover:bg-red-700 transition p-3 rounded-lg font-semibold hover:shadow-[0_0_20px_rgba(255,0,0,0.8)] cursor-pointer"
+            className="bg-red-600 p-3 rounded-lg cursor-pointer hover:bg-red-700 transition"
           >
             Sign Up
           </button>
         </form>
 
-        <p className="text-sm text-gray-400 mt-6 text-center">
+        <div className="pt-2">
+          <div className="flex items-center">
+            <div className="flex-grow h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
+            <span className="mx-4 text-gray-400">OR</span>
+            <div className="flex-grow h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
+          </div>
+        </div>
+
+        <div className="pt-3 ">
+          {/* ✅ GOOGLE BUTTON WORKING */}
+          <button onClick={handleGoogleLogin} className="pl-30 cursor-pointer">
+            <FcGoogle size={31} />
+          </button>
+
+          <button className="pl-6 cursor-pointer ">
+            <FaFacebook size={30} />
+          </button>
+
+          <button className="pl-6 cursor-pointer ">
+            <FaApple size={30} />
+          </button>
+        </div>
+
+        <p className="text-sm text-gray-400 mt-2 text-center">
           Already have an account?{" "}
-          <Link to="/login" className="text-red-500 hover:underline">
+          <Link to="/login" className="text-red-500">
             Login
           </Link>
         </p>
