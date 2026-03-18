@@ -56,8 +56,7 @@ const Signup = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:5173", // change if needed
-      },
+redirectTo: window.location.origin      },
     });
 
     if (error) {
