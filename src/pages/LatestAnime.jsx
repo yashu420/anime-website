@@ -99,7 +99,9 @@ const LatestAnime = () => {
             <ChevronRight className="text-white" size={28} />
           </button>
         )}
+        
       </div>
+      
     </div>
   );
 };

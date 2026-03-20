@@ -7,6 +7,7 @@ export default {
     extend: {
       fontFamily: {
         orbitron: ["Orbitron", "sans-serif"],
+        dmSerif: ['"DM Serif Display"', 'serif'],
       },
     },
   },

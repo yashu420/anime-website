@@ -31,7 +31,7 @@ const Index = () => {
           {/* Content */}
           <div className="text-center px-6 md:px-22  max-w-5xl pb-9">
             <div className="  ">
-              <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold  font-['Orbitron']">
+              <h1 className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold font-dmSerif">
                 Watch <span className="text-red-600">Anime</span>
               </h1>
 
@@ -105,7 +105,6 @@ const Index = () => {
       <div className="relative w-full  ">
         <Reveal>
           <div className="m-10 -mt-40 ">
-            
             <AnimeRow
               title="Trending Anime 🔥"
               apiUrl="https://api.jikan.moe/v4/top/anime"
@@ -114,15 +113,14 @@ const Index = () => {
               title="Latest Released Anime"
               apiUrl="https://api.jikan.moe/v4/seasons/now"
             />
-         
+
             <FeaturedCollections />
             <AnimeRow
-              title="Latest Released Anime"
+              title="Recently Added"
               apiUrl="https://api.jikan.moe/v4/top/anime"
             />
-          </div> 
+          </div>
         </Reveal>
-       
       </div>
     </div>
   );

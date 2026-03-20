@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ShinyText from "../reactBits/ShinyText";
 import LatestAnime from "./LatestAnime";
+import AnimeRow from "./AnimeRow";
 
 const AnimeDetails = () => {
   const { id } = useParams();
@@ -138,6 +139,10 @@ const AnimeDetails = () => {
       </div>
      
       <LatestAnime />
+       <AnimeRow
+              title="⭐ Must Watch"
+              apiUrl="https://api.jikan.moe/v4/top/anime"
+            />
     </div>
   );
 };
