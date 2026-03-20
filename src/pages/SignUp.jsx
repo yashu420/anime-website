@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabase-client";
-import SuccessPopup from "./SuccessPopup";
+import SuccessPopup from "./components/SuccessPopup";
 import { FcGoogle } from "react-icons/fc";
 
 const Signup = () => {
@@ -127,9 +127,9 @@ const Signup = () => {
 
         <div className="pt-2">
           <div className="flex items-center">
-            <div className="flex-grow h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
+            <div className="grow h-px bg-linear-to-r from-transparent via-gray-400 to-transparent"></div>
             <span className="mx-4 text-gray-400">OR</span>
-            <div className="flex-grow h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent"></div>
+            <div className="grow h-px bg-linear-to-r from-transparent via-gray-400 to-transparent"></div>
           </div>
         </div>
 
@@ -141,7 +141,7 @@ const Signup = () => {
             >
               <FcGoogle size={22} />
               <span className="text-sm font-medium tracking-wide">
-                Continue with Google
+                Signup with Google
               </span>
             </button>
             <p className="text-sm text-gray-400 mt-2 text-center">
