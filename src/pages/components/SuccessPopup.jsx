@@ -10,7 +10,7 @@ const SuccessPopup = ({ onClose }) => {
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
         className="bg-black border border-red-600/70 text-white p-8 rounded-2xl 
-        shadow-[0_0_40px_rgba(255,0,0,0.5)] text-center w-[420px]"
+        shadow-[0_0_40px_rgba(255,0,0,0.5)] text-center w-[520px]"
       >
         
         {/* 🔴 Icon */}
@@ -24,31 +24,18 @@ const SuccessPopup = ({ onClose }) => {
         </div>
 
         {/* 🔥 Title */}
-        <h2 className="text-2xl font-bold mb-2">
+        <h2 className="text-3xl font-bold mb-2">
           Verify Your <span className="text-red-500">Account</span>
         </h2>
 
         {/* 📩 Message */}
-        <p className="text-sm text-gray-400 mb-6 leading-relaxed">
+        <p className="text-sm text-gray-400  leading-relaxed">
           We’ve sent a verification link to your email.  
           Please check your inbox to activate your account.
         </p>
 
         {/* ✅ Button */}
-        <button
-          onClick={onClose}
-          className="w-full bg-red-600 hover:bg-red-700 
-          py-2.5 rounded-lg transition duration-200 
-          font-medium shadow-[0_0_15px_rgba(255,0,0,0.6)] cursor-pointer"
-        >
-          Continue to Login →
-        </button>
-
-        {/* ✨ Extra hint */}
-        <p className="text-xs text-gray-500 mt-4">
-          Didn’t get the  email? Check spam folder.
-        </p>
-
+       
       </motion.div>
     </div>
   );

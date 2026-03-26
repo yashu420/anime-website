@@ -1,4 +1,4 @@
-import { useState } from "react";
+  import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabase-client";
 import SuccessPopup from "./components/SuccessPopup";
@@ -30,12 +30,13 @@ const Signup = () => {
 
     try {
       const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: { full_name: name },
-        },
-      });
+  email,
+  password,
+  options: {
+    emailRedirectTo: `${window.location.origin}/auth`, // ✅ ADD THIS ONLY
+    data: { full_name: name },
+  },
+});
 
       if (error) {
         setError(error.message);
@@ -48,20 +49,23 @@ const Signup = () => {
       setError("Something went wrong");
     }
   };
+const handleGoogleLogin = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/auth`, // ✅ FIX THIS
+    },
+  });
 
-  // ✅ GOOGLE LOGIN
-  const handleGoogleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: "http://localhost:5173", // change if needed
-      },
-    });
+  if (error) {
+    setError(error.message);
+    return;
+  }
 
-    if (error) {
-      setError(error.message);
-    }
-  };
+  if (data?.url) {
+    window.location.href = data.url;
+  }
+};  
 
   const handleClosePopup = () => {
     setShowPopup(false);
@@ -73,8 +77,8 @@ const Signup = () => {
       {showPopup && <SuccessPopup onClose={handleClosePopup} />}
 
       <div
-        className="w-full max-w-md bg-black/70 backdrop-blur-md p-8 rounded-2xl border
-       border-red-600/60 shadow-[0_0_30px_rgba(255,0,0,0.5)] h-135 "
+        className="w-full max-w-md bg-black/70 backdrop-blur-md p-8 rounded-2xl border 
+       border-red-600/60 shadow-[0_0_30px_rgba(255,0,0,0.5)]  "
       >
         <h1 className="text-3xl font-bold mb-6 text-center">
           Create <span className="text-red-600">Account</span>
@@ -133,7 +137,7 @@ const Signup = () => {
           </div>
         </div>
 
-        <div className="pt-3 ">
+        <div className="pt-3  ">
           <div className="">
             <button
               onClick={handleGoogleLogin}
@@ -146,7 +150,7 @@ const Signup = () => {
             </button>
             <p className="text-sm text-gray-400 mt-2 text-center">
               Already have an account?{" "}
-              <Link to="/login" className="text-red-500">
+              <Link to="/Login" className="text-red-500 ">
                 Login
               </Link>
             </p>
@@ -157,4 +161,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signup;    

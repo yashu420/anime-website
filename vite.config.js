@@ -12,5 +12,8 @@ export default defineConfig({
         rewrite: () => "",
       },
     },
+     alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
 });

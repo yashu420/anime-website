@@ -16,6 +16,7 @@ import Terms from "./pages/Terms";
 import ScrollToTop from "./pages/UI/ScrollToTop";
 import Genres from "./pages/GenresSection/Genres";
 import News from "./pages/News";
+import Auth from "./pages/Auth";
 function App() {
   return (
     <>
@@ -47,6 +48,7 @@ function App() {
             <Route path="/terms" element={<Terms />} />
                 <Route path="Genres" element={<Genres />} />
                  <Route path="News" element={<News />} />
+                 <Route path="/auth" element={<Auth />} />
           </Route>
         </Routes>
       </BrowserRouter>{" "}
