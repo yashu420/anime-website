@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ShinyText from "../reactBits/ShinyText";
 import LatestAnime from "./LatestAnime";
 import AnimeRow from "./AnimeRow";
-import AnimeDetailsSkeleton from "./components/SkeletonLoading";
+import AnimeDetailsSkeleton from "./components/loaders/SkeletonLoading";
 
 const AnimeDetails = () => {
   const { id } = useParams();

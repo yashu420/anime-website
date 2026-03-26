@@ -1,51 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import AnimeRowSkeleton from "../pages/components/loaders/AnimeRowSkeleton";
 
 const AnimeRow = ({ title, apiUrl, showScore = true }) => {
   const [animeList, setAnimeList] = useState([]);
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
   const cardsPerView = 6;
   const navigate = useNavigate();
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      await new Promise((res) => setTimeout(res, 1000));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
 
-      const res = await fetch(apiUrl);
+        await new Promise((res) => setTimeout(res, 1000));
 
-      // 🚨 handle 429 specifically
-      if (res.status === 429) {
-        console.warn("Rate limited... retrying");
-        setTimeout(fetchData, 1500); // retry after delay
-        return;
+        const res = await fetch(apiUrl);
+
+        // handle rate limit
+        if (res.status === 429) {
+          console.warn("Rate limited... retrying");
+          setTimeout(fetchData, 1500);
+          return;
+        }
+
+        if (!res.ok) {
+          console.log("API Error:", res.status);
+          setLoading(false);
+          return;
+        }
+
+        const data = await res.json();
+
+        if (!data || !Array.isArray(data.data)) {
+          console.log("Invalid API response:", data);
+          setLoading(false);
+          return;
+        }
+
+        const limited = data.data.slice(0, 20);
+        const shuffled = [...limited].sort(() => Math.random() - 0.5);
+
+        setAnimeList(shuffled);
+        setLoading(false);
+
+      } catch (err) {
+        console.log("Fetch failed:", err);
+        setLoading(false);
       }
+    };
 
-      if (!res.ok) {
-        console.log("API Error:", res.status);
-        return;
-      }
-
-      const data = await res.json();
-
-      // 🛑 STRICT CHECK
-      if (!data || !Array.isArray(data.data)) {
-        console.log("Invalid API response:", data);
-        return;
-      }
-
-      const limited = data.data.slice(0, 20);
-      const shuffled = [...limited].sort(() => Math.random() - 0.5);
-
-      setAnimeList(shuffled);
-    } catch (err) {
-      console.log("Fetch failed:", err);
-    }
-  };
-
-  fetchData();
-}, [apiUrl]);
+    fetchData();
+  }, [apiUrl]);
 
   const nextSlide = () => {
     if (index < animeList.length - cardsPerView) {
@@ -60,6 +69,9 @@ useEffect(() => {
   };
 
   const visibleCards = animeList.slice(index, index + cardsPerView);
+
+  // ✅ Only addition (no CSS touched)
+  if (loading) return <AnimeRowSkeleton />;
 
   return (
     <div className="mt-8 relative">
@@ -100,7 +112,6 @@ useEffect(() => {
                   group-hover:opacity-80 transition"
                 />
 
-                {/* ⭐ SCORE CONTROL */}
                 {showScore && (
                   <div className="absolute top-2 left-2 
                   bg-red-600 text-white text-xs 
