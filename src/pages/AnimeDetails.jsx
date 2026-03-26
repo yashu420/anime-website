@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ShinyText from "../reactBits/ShinyText";
 import LatestAnime from "./LatestAnime";
 import AnimeRow from "./AnimeRow";
+import AnimeDetailsSkeleton from "./components/SkeletonLoading";
 
 const AnimeDetails = () => {
   const { id } = useParams();
@@ -24,12 +25,7 @@ const AnimeDetails = () => {
 
   const ganraeList = anime?.genres;
 
-  if (!anime)
-    return (
-      <div className="min-h-screen bg-black text-white flex justify-center items-center">
-        Loading...
-      </div>
-    );
+ if (!anime) return <AnimeDetailsSkeleton/>;
 
   return (
     <div className="min-h-screen bg-black text-white pt-24 px-6 md:px-16 pb-16">
