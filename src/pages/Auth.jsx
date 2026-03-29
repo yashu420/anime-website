@@ -5,20 +5,26 @@ import { supabase } from "../supabase-client";
 const Auth = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleAuth = async () => {
-      const { data } = await supabase.auth.getSession();
+ useEffect(() => {
+  const handleAuth = async () => {
+    const { data } = await supabase.auth.getSession();
 
-      if (data?.session) {
-        // 🔥 email confirmed → redirect
-        navigate("/login");
-      } else {
-        navigate("/");
-      }
-    };
+    if (!data?.session) {
+      navigate("/login");
+      return;
+    }
 
-    handleAuth();
-  }, []);
+    const user = data.session.user;
+
+    if (!user.user_metadata?.profile_completed) {
+      navigate("/setup-profile");   // 🔥 NEW USER
+    } else {
+      navigate("/");               // ✅ OLD USER
+    }
+  };
+
+  handleAuth();
+}, []);
 
   return (
     <p className="text-white text-center mt-10">

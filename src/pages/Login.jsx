@@ -14,8 +14,7 @@ const Login = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:5173", // change if needed
-      },
+redirectTo: `${window.location.origin}/auth`},
     });
 
     if (error) {
@@ -43,7 +42,7 @@ const handleSubmit = async (e) => {
 
     // ✅ success
     setError("");
-    navigate("/");
+    navigate("/auth");
 
   } catch (err) {
     setError("Something went wrong");

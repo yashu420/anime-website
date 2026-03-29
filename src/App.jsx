@@ -17,6 +17,7 @@ import ScrollToTop from "./pages/UI/ScrollToTop";
 import Genres from "./pages/GenresSection/Genres";
 import News from "./pages/News";
 import Auth from "./pages/Auth";
+import SetupProfile from "../src/pages/UserDashboard/SetupProfile";
 function App() {
   return (
     <>
@@ -31,27 +32,34 @@ function App() {
         }}
       />
       <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<AppLayout />}>
-            <Route path="anime/:id" element={<AnimeDetails />} />
-            <Route index element={<Index />} />
-            <Route path="popular" element={<Popular />} />
-            <Route path="top" element={<TopRated />} />
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="privacypolicy" element={<PrivacyPolicy />} />
-            <Route path="search/:query" element={<SearchPage />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="trailer/:id" element={<TrailerPage />} />
-            <Route path="/terms" element={<Terms />} />
-                <Route path="Genres" element={<Genres />} />
-                 <Route path="News" element={<News />} />
-                 <Route path="/auth" element={<Auth />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>{" "}
+  <ScrollToTop />
+  <Routes>
+
+   
+    <Route path="/" element={<AppLayout />}>
+
+
+      <Route index element={<Index />} />
+      <Route path="anime/:id" element={<AnimeDetails />} />
+      <Route path="popular" element={<Popular />} />
+      <Route path="top" element={<TopRated />} />
+      <Route path="about" element={<About />} />
+      <Route path="contact" element={<Contact />} />
+      <Route path="privacypolicy" element={<PrivacyPolicy />} />
+      <Route path="search/:query" element={<SearchPage />} />
+      <Route path="login" element={<Login />} />
+      <Route path="signup" element={<Signup />} />
+      <Route path="setup-profile" element={<SetupProfile />} />
+      <Route path="trailer/:id" element={<TrailerPage />} />
+      <Route path="terms" element={<Terms />} />
+      <Route path="Genres" element={<Genres />} />
+      <Route path="News" element={<News />} />
+      <Route path="auth" element={<Auth />} />
+
+    </Route>
+
+  </Routes>
+</BrowserRouter>
     </>
   );
 }

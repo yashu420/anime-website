@@ -34,8 +34,10 @@ const Signup = () => {
   password,
   options: {
     emailRedirectTo: `${window.location.origin}/auth`, // ✅ ADD THIS ONLY
-    data: { full_name: name },
-  },
+data: { 
+  full_name: name,
+  profile_completed: false
+}  },
 });
 
       if (error) {
