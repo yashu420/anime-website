@@ -17,7 +17,7 @@ import ScrollToTop from "./pages/UI/ScrollToTop";
 import Genres from "./pages/GenresSection/Genres";
 import News from "./pages/News";
 import Auth from "./pages/Auth";
-import SetupProfile from "../src/pages/UserDashboard/SetupProfile";
+import SetupProfile from "./pages/UserDashboard/SetupProfile";
 function App() {
   return (
     <>
