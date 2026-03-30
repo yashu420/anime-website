@@ -9,13 +9,24 @@ const LatestAnime = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://api.jikan.moe/v4/seasons/now")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchLatestAnime = async (retryCount = 0) => {
+      try {
+        const res = await fetch("https://api.jikan.moe/v4/seasons/now");
+        if (res.status === 429) {
+          if (retryCount < 5) {
+            console.warn(`Rate limited for latest anime... retrying`);
+            setTimeout(() => fetchLatestAnime(retryCount + 1), 1500 * (retryCount + 1));
+          }
+          return;
+        }
+        const data = await res.json();
         const shuffled = [...data.data].sort(() => Math.random() - 0.5);
         setAnimeList(shuffled);
-      })
-      .catch((err) => console.log(err));
+      } catch (err) {
+        console.log("Latest Anime fetch failed:", err);
+      }
+    };
+    fetchLatestAnime();
   }, []);
 
   const nextSlide = () => {

@@ -3,6 +3,47 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AnimeRowSkeleton from "../pages/components/loaders/AnimeRowSkeleton";
 
+const fetchCache = {};
+
+const fetchWithRetry = async (url, retries = 5, delay = 2000) => {
+  if (!fetchCache[url]) {
+    fetchCache[url] = (async () => {
+      // Basic initial spread to prevent all requests at exact same ms
+      await new Promise(resolve => setTimeout(resolve, Math.random() * 1000));
+      for (let i = 0; i < retries; i++) {
+        try {
+          const res = await fetch(url);
+          if (res.status === 429 || res.status >= 500) {
+            console.warn(`Rate limited or server error ${res.status}... retrying ${url}`);
+            await new Promise(resolve => setTimeout(resolve, delay * (i + 1))); // exponential-like backoff
+            continue;
+          }
+          if (!res.ok) {
+            console.warn(`API Error ${res.status} for ${url}`);
+            throw new Error(`API Error: ${res.status}`);
+          }
+          const data = await res.json();
+          if (!data || !Array.isArray(data.data)) {
+            throw new Error("Invalid API response");
+          }
+          return data;
+        } catch (err) {
+          if (i === retries - 1) throw err;
+          await new Promise(resolve => setTimeout(resolve, delay * (i + 1)));
+        }
+      }
+      throw new Error("Max retries reached");
+    })();
+  }
+  
+  try {
+    return await fetchCache[url];
+  } catch (err) {
+    delete fetchCache[url];
+    throw err;
+  }
+};
+
 const AnimeRow = ({ title, apiUrl, showScore = true }) => {
   const [animeList, setAnimeList] = useState([]);
   const [index, setIndex] = useState(0);
@@ -12,34 +53,14 @@ const AnimeRow = ({ title, apiUrl, showScore = true }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
         setLoading(true);
 
-        await new Promise((res) => setTimeout(res, 1000));
-
-        const res = await fetch(apiUrl);
-
-        // handle rate limit
-        if (res.status === 429) {
-          console.warn("Rate limited... retrying");
-          setTimeout(fetchData, 1500);
-          return;
-        }
-
-        if (!res.ok) {
-          console.log("API Error:", res.status);
-          setLoading(false);
-          return;
-        }
-
-        const data = await res.json();
-
-        if (!data || !Array.isArray(data.data)) {
-          console.log("Invalid API response:", data);
-          setLoading(false);
-          return;
-        }
+        const data = await fetchWithRetry(apiUrl);
+        if (!isMounted) return;
 
         const limited = data.data.slice(0, 20);
         const shuffled = [...limited].sort(() => Math.random() - 0.5);
@@ -49,11 +70,15 @@ const AnimeRow = ({ title, apiUrl, showScore = true }) => {
 
       } catch (err) {
         console.log("Fetch failed:", err);
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [apiUrl]);
 
   const nextSlide = () => {

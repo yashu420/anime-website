@@ -6,12 +6,21 @@ const TrailerPage = () => {
   const [anime, setAnime] = useState(null);
 
   useEffect(() => {
-    const fetchAnime = async () => {
-      const res = await fetch(
-        `https://api.jikan.moe/v4/anime/${id}`
-      );
-      const data = await res.json();
-      setAnime(data.data);
+    const fetchAnime = async (retryCount = 0) => {
+      try {
+        const res = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
+        if (res.status === 429) {
+          if (retryCount < 5) {
+            console.warn(`Rate limited for trailer anime ${id}... retrying`);
+            setTimeout(() => fetchAnime(retryCount + 1), 1500 * (retryCount + 1));
+          }
+          return;
+        }
+        const data = await res.json();
+        setAnime(data.data);
+      } catch (err) {
+        console.log("Trailer anime fetch failed:", err);
+      }
     };
 
     fetchAnime();

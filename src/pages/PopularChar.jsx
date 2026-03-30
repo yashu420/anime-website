@@ -7,12 +7,23 @@ const PopularChar = () => {
   const cardsPerView = 6;
 
   useEffect(() => {
-    fetch("https://api.jikan.moe/v4/top/characters")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchPopularChars = async (retryCount = 0) => {
+      try {
+        const res = await fetch("https://api.jikan.moe/v4/top/characters");
+        if (res.status === 429) {
+          if (retryCount < 5) {
+            console.warn(`Rate limited for popular chars... retrying`);
+            setTimeout(() => fetchPopularChars(retryCount + 1), 1500 * (retryCount + 1));
+          }
+          return;
+        }
+        const data = await res.json();
         setCharacters(data.data);
-      })
-      .catch((err) => console.log(err));
+      } catch (err) {
+        console.log("Popular Characters fetch failed:", err);
+      }
+    };
+    fetchPopularChars();
   }, []);
 
   const nextSlide = () => {

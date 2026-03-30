@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
-const AVATARS = ["🌸","⚔️","🌊","⚡","🦊","🌙","🔥","❄️"];
+const AVATARS = ["🌸", "⚔️", "🌊", "⚡", "🦊", "🌙", "🔥", "❄️"];
 
-export default function AvatarPicker() {
+export default function AvatarPicker({ onNext }) {
   const [image, setImage] = useState(null);
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
@@ -13,10 +13,12 @@ export default function AvatarPicker() {
 
   const handleFile = (file) => {
     if (!file || !file.type.startsWith("image/")) return;
-    setImage(URL.createObjectURL(file));
+    const url = URL.createObjectURL(file);
+    setImage(url);
     setSelected(null);
     setOpen(false);
     setMode(null);
+    if (onNext) onNext({ type: "image", file });
   };
 
   // 🔥 Close on outside click + ESC
@@ -45,12 +47,11 @@ export default function AvatarPicker() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center  bg-[#0a0a10]">
+    <div className="flex items-center justify-center  ">
       <div
         ref={wrapperRef}
         className="flex flex-col items-center gap-4 relative"
       >
-
         {/* 🔵 Main Avatar */}
         <div
           onClick={() => {
@@ -58,9 +59,16 @@ export default function AvatarPicker() {
             setMode(null);
           }}
           className={`w-20 h-20 rounded-full cursor-pointer 
-          border-2 ${image || selected ? "border-purple-500" : "border-gray-600"} 
-          flex items-center justify-center overflow-hidden relative 
-          hover:scale-105 transition duration-200`}
+  border-2 ${image || selected ? "border-purple-500" : "border-gray-600"} 
+  flex items-center justify-center overflow-hidden relative 
+  hover:scale-105 transition duration-200
+  
+  ${
+    image || selected
+      ? "shadow-[0_0_12px_rgba(168,85,247,0.6)]"
+      : "shadow-[0_0_6px_rgba(255,255,255,0.15)]"
+  }
+  `}
         >
           {image ? (
             <img src={image} className="w-full h-full object-cover" />
@@ -78,7 +86,6 @@ export default function AvatarPicker() {
         {/* 🎛️ Dropdown Panel */}
         {open && (
           <div className="absolute top-24 w-44 bg-[#111118] border border-[#22223a] rounded-xl p-3 shadow-2xl animate-fadeIn">
-
             {/* Step 1 */}
             {!mode && (
               <div className="flex flex-col gap-2">
@@ -112,6 +119,7 @@ export default function AvatarPicker() {
                       setImage(null);
                       setOpen(false);
                       setMode(null);
+                      if (onNext) onNext({ type: "avatar", value: a });
                     }}
                     className={`w-9 h-9 rounded-full flex items-center justify-center 
                     cursor-pointer text-sm transition 

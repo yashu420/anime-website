@@ -11,7 +11,7 @@ const SliderButton = ({ direction = "left", onClick }) => {
         isLeft ? "left-[-2px]" : "right-[-0px]"
       } top-1/2 -translate-y-1/2 z-20 
       bg-black/70 p-3 rounded-full 
-      hover:bg-red-600 transition duration-300`}
+      hover:bg-red-600 cursor-pointer transition duration-300`}
     >
       {isLeft ? (
         <ChevronLeft size={28} className="text-white" />

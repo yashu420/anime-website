@@ -7,12 +7,16 @@ import { FaPlayCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import SearchPageSkeleton from "./components/loaders/SearchPageSkeleton";
+
 const SearchPage = () => {
   const { query } = useParams();
   const [anime, setAnime] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const fetchAnime = async () => {
+    setLoading(true);
     try {
       const graphqlQuery = `
         query {
@@ -61,6 +65,9 @@ const SearchPage = () => {
       setAnime(formatted);
     } catch (err) {
       console.log("AniList Search Error:", err);
+      setAnime([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,13 +76,16 @@ const SearchPage = () => {
   }, [query]);
 
   return (
-    <div className="min-h-screen bg-black text-white pt-20 pb-6 px-10">
+    <div className="min-h-screen bg-gradient-to-br 
+from-[#020617] via-[#0B1120] to-[#020617] text-white pt-20 pb-6 px-10">
       <h1 className="text-3xl font-bold mb-8">
         Search Results for :{" "}
         <span className="text-red-600">{query.toUpperCase()}</span>
       </h1>
 
-      {anime.length === 0 ? (
+      {loading ? (
+        <SearchPageSkeleton />
+      ) : anime.length === 0 ? (
         <div className="text-md pl-3">
           <div>
             <Lottie
@@ -104,8 +114,14 @@ const SearchPage = () => {
           {anime.map((item) => (
             <div
               key={item.mal_id}
-              className="bg-gray-900 hover:shadow-[0_0_15px_rgba(255,0,0,0.5)]
-              rounded-lg overflow-hidden hover:scale-105 transition"
+              className="bg-white/5 
+border border-white/10 
+backdrop-blur-xl 
+rounded-2xl 
+overflow-hidden
+transition-all duration-300
+hover:-translate-y-2
+hover:shadow-[0_10px_40px_rgba(139,92,246,0.25)] "
             >
               <img
                 src={item.image}

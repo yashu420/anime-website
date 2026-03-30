@@ -22,7 +22,7 @@ const TopPicksForYouSection = () => {
   };
 
   useEffect(() => {
-    const fetchTopPicks = async () => {
+    const fetchTopPicks = async (retryCount = 0) => {
       try {
         const query = `
           query {
@@ -63,6 +63,10 @@ const TopPicksForYouSection = () => {
         setAnimeList(shuffled);
       } catch (error) {
         console.error("Top Picks Fetch Error:", error);
+        if (retryCount < 3) {
+          console.warn(`Retrying AniList (TopPicks)... (${retryCount + 1})`);
+          setTimeout(() => fetchTopPicks(retryCount + 1), 2000 * (retryCount + 1));
+        }
       }
     };
 

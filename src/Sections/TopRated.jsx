@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import TopRatedSection from "./TopRatedSection";
 import AnimeOfTheYearSection from "./AnimeOfTheYearSection";
 import TopPicksForYouSection from "./TopPicksForYouSection";
+import AnimeRowSkeleton from "../pages/components/loaders/AnimeRowSkeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const TopRated = () => {
   const [animeList, setAnimeList] = useState([]);
@@ -22,7 +24,7 @@ const TopRated = () => {
   };
 
   useEffect(() => {
-    const fetchTopRatedAnime = async () => {
+    const fetchTopRatedAnime = async (retryCount = 0) => {
       try {
         const query = `
           query {
@@ -73,6 +75,10 @@ const TopRated = () => {
         setHeroList(shuffled);
       } catch (error) {
         console.error("AniList Fetch Error:", error);
+        if (retryCount < 3) {
+          console.warn(`Retrying AniList (TopRated)... (${retryCount + 1})`);
+          setTimeout(() => fetchTopRatedAnime(retryCount + 1), 2000 * (retryCount + 1));
+        }
       }
     };
 
@@ -92,8 +98,31 @@ const TopRated = () => {
 
   if (!animeList.length || !heroList.length) {
     return (
-      <div className="min-h-screen bg-black text-white flex justify-center items-center">
-        Loading Top Rated Anime...
+      <div className="bg-black text-white min-h-screen pt-17 w-full overflow-hidden">
+        {/* Hero Section Skeleton */}
+        <div className="relative h-[90vh] overflow-hidden w-full bg-zinc-900/20 animate-pulse">
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent z-10" />
+          <div className="relative z-20 h-full flex flex-col justify-center px-16 max-w-2xl space-y-6">
+            <Skeleton className="h-16 w-full md:w-3/4 bg-white/10" />
+            
+            <div className="space-y-3 mt-8">
+              <Skeleton className="h-4 w-full bg-white/10" />
+              <Skeleton className="h-4 w-11/12 bg-white/10" />
+              <Skeleton className="h-4 w-4/5 bg-white/10" />
+            </div>
+            
+            <Skeleton className="h-4 w-48 bg-white/10 mt-6" />
+            
+            <Skeleton className="h-12 w-36 rounded-xl bg-white/10 mt-8" />
+          </div>
+        </div>
+
+        {/* Section Rows Skeletons */}
+        <div className="pb-20">
+          <AnimeRowSkeleton />
+          <AnimeRowSkeleton />
+          <AnimeRowSkeleton />
+        </div>
       </div>
     );
   }

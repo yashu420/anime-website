@@ -1,6 +1,7 @@
 import React, { useState, Children, useRef, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-  import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 export default function Stepper({
   children,
   initialStep = 1,
@@ -9,7 +10,8 @@ export default function Stepper({
 }) {
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [direction, setDirection] = useState(0);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const stepsArray = Children.toArray(children);
   const totalSteps = stepsArray.length;
   const isLastStep = currentStep === totalSteps;
@@ -25,6 +27,15 @@ export default function Stepper({
   };
 
   const handleNext = () => {
+    const currentStepElement = stepsArray[currentStep - 1];
+
+    if (
+      currentStepElement.props.validate &&
+      !currentStepElement.props.validate()
+    ) {
+      return;
+    }
+
     if (!isLastStep) {
       setDirection(1);
       updateStep(currentStep + 1);
@@ -43,12 +54,15 @@ export default function Stepper({
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#020617] via-[#0f172a] to-[#1e1b4b]">
+      
+      {/* ✅ NORMAL CONTAINER (NO GLOW) */}
+      <div className="w-full max-w-xl backdrop-blur-2xl bg-[rgba(12,9,11,0.9)] rounded-[28px] border border-purple-500/30 shadow-lg">
 
-      {/* Glass Card */}
-      <div className="w-full max-w-xl rounded-3xl bg-white/5 backdrop-blur-xl border border-purple-500/30 shadow-[0_0_40px_rgba(139,92,246,0.25)] overflow-hidden">
+        {/* Background overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-transparent to-rose-500/5 pointer-events-none rounded-[28px]" />
 
-        {/* Step Indicators */}
-        <div className="flex items-center p-6">
+        {/* Steps */}
+        <div className="flex items-center p-6 relative z-10">
           {stepsArray.map((_, index) => {
             const step = index + 1;
             const isActive = currentStep === step;
@@ -84,14 +98,14 @@ export default function Stepper({
           })}
         </div>
 
-        {/* Step Content */}
+        {/* Content */}
         <StepContentWrapper currentStep={currentStep} direction={direction}>
           {stepsArray[currentStep - 1]}
         </StepContentWrapper>
 
         {/* Footer */}
         {!isCompleted && (
-          <div className="flex justify-between p-6">
+          <div className="flex justify-between p-6 relative z-10">
             {currentStep > 1 && (
               <button
                 onClick={handleBack}
@@ -103,8 +117,7 @@ export default function Stepper({
 
             <button
               onClick={handleNext}
-              className="ml-auto flex items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2 shadow-[0_0_15px_rgba(139,92,246,0.6)]
-               hover:scale-105 transition cursor-pointer"
+              className="ml-auto flex items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2 shadow-lg hover:scale-105 transition cursor-pointer"
             >
               {isLastStep ? "Finish" : "Next"}
             </button>
@@ -115,7 +128,7 @@ export default function Stepper({
   );
 }
 
-/* Content Animation */
+/* Animation */
 function StepContentWrapper({ currentStep, direction, children }) {
   const [height, setHeight] = useState(0);
 
@@ -153,7 +166,7 @@ function Slide({ children, direction, onHeight }) {
   );
 }
 
-/* Step Wrapper */
-export function Step({ children }) {
+/* Step */
+export function Step({ children, validate }) {
   return <div>{children}</div>;
 }
